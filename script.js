@@ -34,35 +34,57 @@
 
   loadLetter();
 
+  // 动画时序：三个阶段，分别用 class 触发
+  //   t=0       : 加 .opened          —— 蜡封脱落 + 信封盖翻起 (~750ms)
+  //   t=750ms   : 加 .releasing       —— 信纸从信封中升起 (~750ms)
+  //   t=1500ms  : 加 .gone + .show    —— 信封淡出，正文信件展开
+  const FLAP_MS = 750;
+  const RELEASE_MS = 750;
+  const ENVELOPE_FADE_MS = 500;
+
   function openEnvelope(e) {
     if (e && e.isTrusted === false) return;
     if (envelope.classList.contains("opened")) return;
+
     envelope.classList.add("opened");
+
+    setTimeout(() => {
+      envelope.classList.add("releasing");
+    }, FLAP_MS);
+
     setTimeout(() => {
       envelope.classList.add("gone");
-      setTimeout(() => {
-        envelope.classList.add("hidden");
-      }, 500);
       letter.classList.remove("hiding");
       letter.classList.add("show");
       letter.setAttribute("aria-hidden", "false");
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
-    }, 700);
+    }, FLAP_MS + RELEASE_MS);
+
+    setTimeout(() => {
+      envelope.classList.add("hidden");
+    }, FLAP_MS + RELEASE_MS + ENVELOPE_FADE_MS);
   }
 
   function closeLetter() {
     letter.classList.remove("show");
     letter.classList.add("hiding");
     letter.setAttribute("aria-hidden", "true");
+
+    // 信封先回到可见状态再撤回各阶段
     envelope.classList.remove("hidden");
     requestAnimationFrame(() => {
       envelope.classList.remove("gone");
     });
+
     setTimeout(() => {
       letter.classList.remove("hiding");
-      envelope.classList.remove("opened");
+      // 反向收回：先放下信纸，再合上信封盖
+      envelope.classList.remove("releasing");
+      setTimeout(() => {
+        envelope.classList.remove("opened");
+      }, 250);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 500);
   }
