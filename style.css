@@ -26,17 +26,21 @@ body {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
   color: var(--ink);
   background: radial-gradient(circle at 20% 20%, var(--bg-3), transparent 50%),
     radial-gradient(circle at 80% 80%, #ffe9f0, transparent 55%),
     linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  background-attachment: fixed;
   overflow-x: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
   position: relative;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ------- 飘落的爱心 ------- */
@@ -364,11 +368,89 @@ body {
 
 /* ------- 响应式 ------- */
 @media (max-width: 520px) {
+  body {
+    padding: 12px;
+  }
+  .envelope {
+    margin: 40px auto 56px;
+  }
+  .envelope-hint {
+    bottom: -32px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
   .letter {
     padding: 36px 22px 28px;
   }
   .letter-body {
     line-height: 30px;
+    font-size: 15px;
+  }
+  .letter-body p {
+    text-indent: 2em;
+  }
+  .letter-body figure img {
+    max-height: 50vh;
+  }
+  .letter-header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+  }
+  .letter-footer {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding: 8px;
+  }
+  .envelope {
+    margin: 28px auto 48px;
+  }
+  .letter {
+    padding: 28px 18px 24px;
+    border-radius: 6px;
+  }
+  .letter-body {
+    line-height: 28px;
+    text-align: left;
+  }
+  .letter-body p {
+    text-indent: 0;
+  }
+  .signature {
+    font-size: 20px;
+  }
+}
+
+/* 横屏手机：避免信封被压扁 */
+@media (max-height: 520px) and (orientation: landscape) {
+  .envelope {
+    margin: 24px auto 40px;
+    width: min(360px, 60vw);
+    height: min(220px, 38vw);
+  }
+  .letter {
+    padding: 28px 32px 24px;
+  }
+}
+
+/* 减少动效（无障碍 / 省电） */
+@media (prefers-reduced-motion: reduce) {
+  .heart,
+  .envelope-seal,
+  .fade-in {
+    animation: none !important;
+  }
+  .letter,
+  .envelope-flap,
+  .envelope-letter-peek {
+    transition: none !important;
+  }
+  .fade-in {
+    opacity: 1;
+    transform: none;
   }
 }
 
