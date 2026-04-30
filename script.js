@@ -40,24 +40,36 @@
   // 3. 加载文本内容
   loadLetter();
 
-  function openEnvelope() {
+  function openEnvelope(e) {
+    if (e && e.isTrusted === false) return;
     if (envelope.classList.contains("opened")) return;
     envelope.classList.add("opened");
     setTimeout(() => {
       envelope.classList.add("gone");
+      setTimeout(() => {
+        envelope.classList.add("hidden");
+      }, 500);
+      letter.classList.remove("hiding");
       letter.classList.add("show");
       letter.setAttribute("aria-hidden", "false");
-      letter.scrollIntoView({ behavior: "smooth", block: "center" });
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     }, 700);
   }
 
   function closeLetter() {
     letter.classList.remove("show");
+    letter.classList.add("hiding");
     letter.setAttribute("aria-hidden", "true");
-    envelope.classList.remove("gone");
+    envelope.classList.remove("hidden");
+    requestAnimationFrame(() => {
+      envelope.classList.remove("gone");
+    });
     setTimeout(() => {
+      letter.classList.remove("hiding");
       envelope.classList.remove("opened");
-      envelope.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }, 500);
   }
 
