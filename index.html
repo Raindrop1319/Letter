@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>致你的一封信</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="hearts" aria-hidden="true"></div>
+
+  <main class="envelope-stage" id="stage">
+    <section class="envelope" id="envelope" role="button" tabindex="0" aria-label="点击打开信封">
+      <div class="envelope-back"></div>
+      <div class="envelope-letter-peek"></div>
+      <div class="envelope-front"></div>
+      <div class="envelope-flap"></div>
+      <div class="envelope-seal" title="点击拆开">♥</div>
+      <p class="envelope-hint">轻轻点一下 · 打开这封信</p>
+    </section>
+
+    <article class="letter" id="letter" aria-hidden="true">
+      <header class="letter-header">
+        <h1 class="letter-title" id="letterTitle">My Dearest</h1>
+        <p class="letter-subtitle" id="letterSubtitle">一封写给你的信</p>
+      </header>
+
+      <div class="letter-body" id="letterBody">
+        <p class="loading">正在轻轻展开信纸…</p>
+      </div>
+
+      <footer class="letter-footer">
+        <p class="signature" id="letterSignature">—— 永远爱你的人</p>
+        <button class="close-btn" id="closeBtn" type="button">收起这封信</button>
+      </footer>
+    </article>
+  </main>
+
+  <audio id="bgm" loop preload="none">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
