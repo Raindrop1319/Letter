@@ -21,12 +21,7 @@
   const subtitleEl = document.getElementById("letterSubtitle");
   const signatureEl = document.getElementById("letterSignature");
   const closeBtn = document.getElementById("closeBtn");
-  const heartsLayer = document.querySelector(".hearts");
 
-  // 1. 启动飘落爱心
-  startHearts();
-
-  // 2. 信封交互
   envelope.addEventListener("click", openEnvelope);
   envelope.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -37,7 +32,6 @@
 
   closeBtn.addEventListener("click", closeLetter);
 
-  // 3. 加载文本内容
   loadLetter();
 
   function openEnvelope(e) {
@@ -210,29 +204,5 @@
   }
   function escapeAttr(s) {
     return escapeHtml(s).replace(/"/g, "&quot;");
-  }
-
-  // ----- 飘落爱心 -----
-  function startHearts() {
-    const SYMBOLS = ["♥", "♡", "❣", "❤"];
-    const spawn = () => {
-      const h = document.createElement("span");
-      h.className = "heart";
-      h.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-      const left = Math.random() * 100;
-      const size = 14 + Math.random() * 22;
-      const dur = 8 + Math.random() * 8;
-      const drift = (Math.random() * 200 - 100).toFixed(0) + "px";
-      h.style.left = left + "vw";
-      h.style.fontSize = size + "px";
-      h.style.animationDuration = dur + "s";
-      h.style.setProperty("--drift", drift);
-      h.style.color =
-        Math.random() > 0.5 ? "#e85a7a" : "#ff9bb6";
-      heartsLayer.appendChild(h);
-      setTimeout(() => h.remove(), dur * 1000 + 500);
-    };
-    for (let i = 0; i < 6; i++) setTimeout(spawn, i * 700);
-    setInterval(spawn, 1100);
   }
 })();
